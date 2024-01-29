@@ -11,7 +11,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -34,13 +33,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.material3.Button
+import androidx.navigation.NavHostController
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeTutorialTheme {
-                Conversation(SampleData.conversationSample)
+                Navigation()
             }
         }
     }
@@ -80,7 +82,9 @@ fun MessageCard(msg: Message) {
                 shape = MaterialTheme.shapes.medium,
                 shadowElevation = 1.dp,
                 color = surfaceColor,
-                modifier = Modifier.animateContentSize().padding(1.dp)
+                modifier = Modifier
+                    .animateContentSize()
+                    .padding(1.dp)
             ) {
                 Text(
                     text = msg.body,
@@ -102,11 +106,14 @@ fun Conversation(messages: List<Message>) {
     }
 }
 
-@Preview
+//@Preview
 @Composable
-fun PreviewConversation() {
+fun PreviewConversation(navController: NavHostController) {
     ComposeTutorialTheme {
         Conversation(SampleData.conversationSample)
+        Button(onClick = { navController.navigate("second") } ) {
+            Text("To contacts")
+        }
     }
 }
 
@@ -127,3 +134,4 @@ fun PreviewMessageCard() {
         }
     }
 }
+
